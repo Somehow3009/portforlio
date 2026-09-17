@@ -42,7 +42,7 @@ export const profile: ProfileInfo = {
   education: 'B.E. INFORMATION TECHNOLOGY · CAN THO UNIVERSITY · 2024',
   socials: [
     { label: 'GitHub', url: 'https://github.com/somehow3009' },
-    { label: 'LinkedIn', url: 'https://linkedin.com/in/hữu-khang-huỳnh' },
+    { label: 'LinkedIn', url: 'https://linkedin.com/in/h%E1%BB%AFu-khang-hu%E1%BB%B3nh' },
   ],
 }
 
@@ -186,17 +186,17 @@ export const experiences: Experience[] = [
 
 export const projects: Project[] = [
   {
-    id: 'bizen-ai',
-    title: 'Bizen.ai — AI SaaS Platform',
+    id: 'regflow',
+    title: 'RegFlow — AI Business Registration',
     color: '#a855f7',
-    description: 'AI-powered SaaS platform integrating LLM APIs, RAG pipelines, and prompt engineering for real-world business use cases.',
-    problem: 'Businesses need practical AI solutions but lack the expertise to integrate LLMs into their workflows.',
+    description: 'AI platform automating business registration dossiers for legal service firms (successor of Bizen.ai) — from information collection to filing-ready profiles.',
+    problem: 'Legal service firms waste hours on manual paperwork when preparing business establishment dossiers.',
     solution:
-      'Designed and implemented AI application workflows using OpenAI/Gemini APIs, RAG-based retrieval, embeddings, and prompt engineering. Coordinated the full product lifecycle from MVP to production.',
-    tech: ['OpenAI API', 'Gemini API', 'RAG', 'Embeddings', 'React', 'Node.js'],
+      'Automated the information-gathering workflow and AI-generated registration profiles — accurate, flexible document handling that saves time and resources, extensible toward a full SME governance platform.',
+    tech: ['OpenAI API', 'RAG', 'Embeddings', 'React', 'Node.js'],
     github: 'https://github.com/somehow3009',
-    live: '',
-    highlight: 'Full AI SaaS product — from client requirements to production',
+    live: 'https://regflow-e0vai64.public.builtwithrocket.new/',
+    highlight: 'AI registration automation — live demo available',
   },
   {
     id: 'ai-agent-workflows',
@@ -236,6 +236,45 @@ export const projects: Project[] = [
     github: 'https://github.com/somehow3009',
     live: '',
     highlight: 'IoT + AI prototype for aquaculture automation',
+  },
+  {
+    id: 'e-voting',
+    title: 'E-Voting — Council Voting System',
+    color: '#ff7847',
+    description: 'Electronic voting system for People\u2019s Councils with live result tracking — three roles: session admin, delegates voting by code, and hall display screen.',
+    problem: 'Council sessions need transparent, efficient electronic voting with real-time oversight.',
+    solution:
+      'Built role-based voting flows: admins control sessions and delegates, delegates vote by code, and the hall screen shows live results with real-time sync.',
+    tech: ['React', 'Real-time Sync', 'Role-based Access', 'Vercel'],
+    github: 'https://github.com/somehow3009',
+    live: 'https://council-vote.vercel.app/',
+    highlight: 'Live council voting — admin · delegates · hall screen',
+  },
+  {
+    id: 'secure-cloud',
+    title: 'Secure Cloud Deployment Service',
+    color: '#38bdf8',
+    description: 'High-security cloud infrastructure service on Viettel IDC — zero-trust 3-VM model (Bastion, App, Database) with self-hosted mail, monitoring, backup, CI/CD, database and LLM services for SMEs without a dedicated DevOps team.',
+    problem: 'SMEs need security-standard infrastructure without hiring a dedicated DevOps team.',
+    solution:
+      'Designed and deployed a zero-trust topology on Viettel IDC with hardened Bastion/App/Database VMs plus self-hosted internal services (mail, monitoring, backup, CI/CD, LLM).',
+    tech: ['Viettel IDC', 'Zero-Trust', 'Linux', 'Docker', 'CI/CD'],
+    github: 'https://github.com/somehow3009',
+    live: '',
+    highlight: 'Zero-trust cloud for SMEs — ready to sell',
+  },
+  {
+    id: 'appsheet-service',
+    title: 'AppSheet Business Apps',
+    color: '#fb7185',
+    description: 'No-code business apps on Google AppSheet — digitize workflows in 1–4 weeks at low cost, integrated with Google Workspace (Sheets, Forms, Drive, Gmail): CRM, inventory, orders, field forms, dashboards.',
+    problem: 'Businesses need fast, low-cost digitization without hiring developers.',
+    solution:
+      'Designed and delivered AppSheet apps (CRM, warehouse, orders, reporting dashboards) with Google Workspace integration — maintainable and extensible by the client team.',
+    tech: ['AppSheet', 'Google Workspace', 'Automation'],
+    github: 'https://github.com/somehow3009',
+    live: 'https://www.appsheet.com/start/1fe9179b-9870-4050-a58e-ae3d30088be4',
+    highlight: 'No-code apps live in weeks — ready to sell',
   },
 ]
 

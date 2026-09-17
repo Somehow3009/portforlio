@@ -13,6 +13,10 @@ export interface InputState {
 
 export const inputState: InputState = { x: 0, z: 0, lookVel: 0, pitchVel: 0, interact: false }
 
+// Touch joystick activity (used by TourController to let a firm drag break
+// out of the guided section flow — the mobile equivalent of WASD).
+export const joyState = { active: false, deflected: false }
+
 const keys = new Set<string>()
 
 export function bindInput() {
@@ -56,15 +60,19 @@ export function bindInput() {
       dy = (dy / len) * max
     }
     const mag = Math.min(len, max) / max
+    if (mag > 0.4) joyState.deflected = true
     inputState.x = ((dx / max) * mag) || 0
     inputState.z = ((dy / max) * mag) || 0
   }
 
   const joyDown = (e: PointerEvent) => {
     if (joyPointer !== null) return
+    if (!(e.target as HTMLElement | null)?.closest?.('#joyzone')) return
     joyPointer = e.pointerId
     joyOrigin.x = e.clientX
     joyOrigin.y = e.clientY
+    joyState.active = true
+    joyState.deflected = false
     e.preventDefault()
   }
   const joyMove = (e: PointerEvent) => {
@@ -74,6 +82,8 @@ export function bindInput() {
   const joyUp = (e: PointerEvent) => {
     if (e.pointerId !== joyPointer) return
     joyPointer = null
+    joyState.active = false
+    joyState.deflected = false
     inputState.x = 0
     inputState.z = 0
   }
@@ -125,13 +135,12 @@ export function bindInput() {
   window.addEventListener('keyup', up)
   window.addEventListener('blur', blur)
 
-  const joyElement = document.getElementById('joyzone')
-  if (joyElement) {
-    joyElement.addEventListener('pointerdown', joyDown)
-    joyElement.addEventListener('pointermove', joyMove)
-    joyElement.addEventListener('pointerup', joyUp)
-    joyElement.addEventListener('pointercancel', joyUp)
-  }
+  // joystick listens at window level (delegated by #joyzone target) because
+  // the touch layer mounts after input is bound (only in playing phase)
+  window.addEventListener('pointerdown', joyDown)
+  window.addEventListener('pointermove', joyMove)
+  window.addEventListener('pointerup', joyUp)
+  window.addEventListener('pointercancel', joyUp)
 
   // pointer-look listens on the scene layer (beneath UI); #joyzone on touch
   window.addEventListener('pointerdown', lookDown)
@@ -145,12 +154,10 @@ export function bindInput() {
     window.removeEventListener('keydown', down)
     window.removeEventListener('keyup', up)
     window.removeEventListener('blur', blur)
-    if (joyElement) {
-      joyElement.removeEventListener('pointerdown', joyDown)
-      joyElement.removeEventListener('pointermove', joyMove)
-      joyElement.removeEventListener('pointerup', joyUp)
-      joyElement.removeEventListener('pointercancel', joyUp)
-    }
+    window.removeEventListener('pointerdown', joyDown)
+    window.removeEventListener('pointermove', joyMove)
+    window.removeEventListener('pointerup', joyUp)
+    window.removeEventListener('pointercancel', joyUp)
     window.removeEventListener('pointerdown', lookDown)
     window.removeEventListener('pointermove', lookMove)
     window.removeEventListener('pointerup', lookUp)

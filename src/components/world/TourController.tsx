@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useGame, TOUR } from '../../store'
 import type { ZoneId } from '../../store'
 import { flow } from './cameraShared'
+import { joyState } from '../controls'
 import { audio } from '../../audio'
 
 // Scroll-driven section flow: each deliberate wheel notch turns the head to
@@ -43,13 +44,20 @@ export function TourController() {
     return () => window.removeEventListener('wheel', onWheel)
   }, [setTourIndex])
 
-  // when the ease has landed, apply the buffered step
+  // when the ease has landed, apply the buffered step.
+  // also: a firm joystick drag (touch look) breaks out of the guided flow,
+  // the mobile equivalent of WASD on desktop.
   useEffect(() => {
     const id = window.setInterval(() => {
       if (flow.pending !== 0 && !flow.locked) {
         const dir = flow.pending
         flow.pending = 0
         apply(dir)
+      }
+      const s = useGame.getState()
+      if (s.tourIndex >= 0 && joyState.active && joyState.deflected) {
+        flow.pending = 0
+        s.setTourIndex(-1)
       }
     }, 80)
     return () => window.clearInterval(id)
@@ -104,6 +112,12 @@ function apply(dir: 1 | -1) {
   if (target === s.tourIndex) return // at the first/last section: stay put
   useGame.getState().setTourIndex(target)
   audio.hover()
+}
+
+// Touch entry point: section stepper buttons call this (the mobile
+// equivalent of a wheel notch / Tab press).
+export function stepSection(dir: 1 | -1) {
+  apply(dir)
 }
 
 // From a guided section: step forward/backward, clamped at the ends (the CV

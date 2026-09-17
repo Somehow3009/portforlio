@@ -58,10 +58,10 @@ async function main() {
   // Project detail via store
   await page.evaluate(() => {
     window.__universe.useGame.getState().setContactOpen(false)
-    window.__universe.useGame.getState().setProjectDetail('bizen-ai')
+    window.__universe.useGame.getState().setProjectDetail('regflow')
   })
   await page.waitForTimeout(400)
-  out.projectDetailOpens = (await page.getByText('Bizen.ai').count()) > 0
+  out.projectDetailOpens = (await page.getByText('RegFlow').count()) > 0
   out.projectGithubLink = (await page.locator('a[href*="github"]').count()) > 0
 
   // Switch to 2D mode

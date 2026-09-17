@@ -45,3 +45,14 @@ canvas {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(0, 240, 255, 0.25);
 }
+
+/* Respect users sensitive to motion: kill ambient animation loops */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

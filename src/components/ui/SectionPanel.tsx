@@ -46,7 +46,7 @@ export function SectionPanel() {
   return (
     <div
       data-ui
-      className="absolute bottom-24 right-3 w-80 max-w-[calc(100vw-1.5rem)] z-[25] flex flex-col rounded border bg-space-950/80 backdrop-blur-xl overflow-hidden animate-slide-in"
+      className="absolute bottom-24 right-3 w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] z-[25] flex flex-col rounded border bg-space-950/80 backdrop-blur-xl overflow-hidden animate-slide-in"
       style={{ borderColor: `${color}44`, boxShadow: `0 0 40px rgba(0,0,0,0.55)` }}
     >
       <div className="flex items-center justify-between px-4 pt-3 pb-2 border-b border-white/5">

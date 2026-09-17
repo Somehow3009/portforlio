@@ -373,11 +373,13 @@ function Node({
     >
       {/* planet — glow, core, orbiting rings */}
       <PlanetVisual color={color} aimed={aimed} pulseKey={meta.id} />
-      <Html center distanceFactor={13} zIndexRange={[10, 0]}>
+      {/* z-index above the touch joystick layer (z-20) so taps reach labels
+          on mobile, but below sheets/panels (z-25+) */}
+      <Html center distanceFactor={28} zIndexRange={[24, 21]}>
         <div
           data-ui
           onClick={actionable ? () => meta.onInteract?.() : undefined}
-          className="relative px-2.5 py-1 rounded font-mono text-[15px] font-semibold tracking-wider whitespace-nowrap select-none"
+          className="relative px-3 py-1.5 rounded font-mono text-[17px] font-semibold tracking-wider whitespace-nowrap select-none"
           style={{
             color: aimed ? '#ffffff' : '#dce7ff',
             textShadow: aimed ? `0 0 14px ${color}, 0 0 28px ${color}44` : `0 0 6px ${color}55`,
@@ -386,14 +388,14 @@ function Node({
             backdropFilter: aimed ? 'blur(4px)' : undefined,
             cursor: actionable ? 'pointer' : 'default',
             transition: 'transform 150ms ease, background 120ms ease, box-shadow 150ms ease',
-            transform: aimed ? 'scale(1.06)' : undefined,
+            transform: aimed ? 'scale(1.22)' : undefined,
             boxShadow: aimed ? `0 0 24px ${color}33` : undefined,
           }}
         >
           {label}
           {aimed && actionable && (
             <span
-              className="absolute -top-3 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded font-mono text-[9px] tracking-widest whitespace-nowrap animate-glowpulse"
+              className="absolute -top-3 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded font-mono text-[10px] tracking-widest whitespace-nowrap animate-glowpulse"
               style={{
                 color: '#0a0d1a',
                 background: color,
@@ -404,7 +406,7 @@ function Node({
           )}
           {aimed && detail && (
             <div
-              className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 rounded font-mono text-[13px] leading-snug text-center cursor-default"
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 rounded font-mono text-[14px] leading-snug text-center cursor-default"
               style={{
                 color: '#fff',
                 background: 'rgba(5,8,20,0.92)',
@@ -439,9 +441,9 @@ function Gate({ position, color, label }: { position: [number, number, number]; 
         <torusGeometry args={[2.2, 0.06, 10, 64]} />
         <meshBasicMaterial color={color} transparent opacity={0.5} blending={THREE.AdditiveBlending} />
       </mesh>
-      <Html center distanceFactor={22} zIndexRange={[5, 0]}>
+      <Html center distanceFactor={40} zIndexRange={[5, 0]}>
         <div
-          className="font-display tracking-[0.3em] whitespace-nowrap text-[18px] font-bold select-none"
+          className="font-display tracking-[0.3em] whitespace-nowrap text-[20px] font-bold select-none"
           style={{ color, textShadow: `0 0 20px ${color}, 0 0 40px ${color}55` }}
         >
           {label}

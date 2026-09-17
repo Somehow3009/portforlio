@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useGame, TOUR } from '../../store'
 import { skills, projects, experiences } from '../../data'
 import { audio } from '../../audio'
@@ -22,6 +23,7 @@ export function HUD() {
   const setContactOpen = useGame((s) => s.setContactOpen)
   const setTourSheetOpen = useGame((s) => s.setTourSheetOpen)
   const setInteraction = useGame((s) => s.setInteraction)
+  const [isTouch] = useState(() => typeof window !== 'undefined' && 'ontouchstart' in window)
 
   if (phase !== 'playing') return null
 
@@ -36,11 +38,15 @@ export function HUD() {
   const reticleColor = skill?.color ?? project?.color ?? career?.color ?? '#00f0ff'
   const pivLabel =
     interaction?.type === 'project' || interaction?.type === 'career'
-      ? '[E / CLICK] INSPECT'
+      ? isTouch
+        ? '[TAP] INSPECT'
+        : '[E / CLICK] INSPECT'
       : interaction?.type === 'skill'
         ? '[VIEW]'
         : interaction?.type === 'terminal'
-          ? 'OPEN CHANNEL'
+          ? isTouch
+            ? 'TAP TO OPEN'
+            : 'OPEN CHANNEL'
           : ''
 
   const goHome = () => {
@@ -62,7 +68,7 @@ export function HUD() {
       {/* Control cluster */}
       <div className="absolute top-3 right-3 z-40 flex items-center gap-2">
         {tourZoneLabel && (
-          <div className="px-3 py-1.5 rounded border border-neon-amber/40 bg-space-900/70 backdrop-blur text-neon-amber font-mono text-[10px] sm:text-xs tracking-wider animate-glowpulse">
+          <div className="px-3 py-1.5 rounded border border-neon-amber/40 bg-space-900/70 backdrop-blur text-neon-amber font-mono text-[10px] sm:text-xs tracking-wider animate-glowpulse truncate max-w-[46vw] sm:max-w-none">
             ◈ SECTION {TOUR.indexOf(section as never) + 1}/{TOUR.length} · {tourZoneLabel}
           </div>
         )}
@@ -96,8 +102,14 @@ export function HUD() {
 
           {/* Interaction prompt */}
           {interaction && !started && (
-            <div className="absolute bottom-24 inset-x-0 z-20 flex justify-center pointer-events-none">
-              <PromptLabel text="Sections: scroll · Inspect: aim / E · Free look: drag / A·D" />
+            <div className="absolute bottom-24 inset-x-0 z-20 flex justify-center pointer-events-none px-4">
+              <PromptLabel
+                text={
+                  isTouch
+                    ? 'Sections: ◀ ▶ · Inspect: tap a label · Free look: drag'
+                    : 'Sections: scroll · Inspect: aim / E · Free look: drag / A·D'
+                }
+              />
             </div>
           )}
 

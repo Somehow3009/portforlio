@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useGame } from '../../store'
+import { profile } from '../../data'
 import { audio } from '../../audio'
 
 interface Msg {
@@ -14,43 +15,43 @@ const initialBot: Msg = {
 
 const FAQ: { keys: RegExp; answer: string }[] = [
   {
-    keys: /remote|work from|location|where/,
+    keys: /remote|work from|location|where|can tho|ho chi minh/,
     answer:
-      '> Yes — fully remote friendly. Based in Ho Chi Minh City (GMT+7), comfortable working across time zones.',
+      '> Based in Can Tho, Viet Nam (GMT+7). Use the message form below to discuss remote or on-site opportunities.',
   },
   {
-    keys: /webgpu|gpu|graphics|three/,
+    keys: /webgpu|gpu|graphics|three|fiber/,
     answer:
-      '> I build GPU-accelerated web experiences with WebGPU + Three.js / React Three Fiber, fielding compute shaders for real-time visuals.',
+      '> This portfolio itself is a real-time 3D experience built with React Three Fiber and Three.js (WebGPU renderer with WebGL2 fallback), TypeScript and Tailwind.',
   },
   {
     keys: /experience|years|how long/,
     answer:
-      '> ~6 years in full-stack development across React, Node.js, Python, and increasingly Rust & WebGPU.',
+      '> ~3 years across React/Next.js, Node.js/NestJS, Python and LLM/RAG systems — from intern (2023) to AI / Full Stack Engineer. See the EXPERIENCE section of the 2D CV.',
   },
   {
-    keys: /hire|contract|freelance|available/,
+    keys: /hire|contract|freelance|available|job|recruit/,
     answer:
-      '> Open to full-time and contract AI / full-stack / WebGPU roles. Send a message via this terminal to reach me directly.',
+      '> Open to AI / full-stack roles. Fill the form below — TRANSMIT opens your mail app with the message addressed directly to the developer.',
   },
   {
     keys: /skills|stack|technologies|tech/,
     answer:
-      '> React, Rust, WebGPU, Python, Wasm, Node.js — explore The Skill Forge island in 3D mode for details.',
+      '> React/Next.js, Node.js/NestJS, Python, PostgreSQL/MongoDB/Redis, Docker, OpenAI/Gemini APIs, RAG & AI Agents — explore The Skill Forge (section 2/5).',
   },
   {
     keys: /projects|portfolio|work/,
     answer:
-      '> Check The Project Galaxy island. Highlight: Warp Engine (WebGPU physics) and Neural Forge (ML studio).',
+      '> See The Project Galaxy (section 3/5): RegFlow (AI business registration, live demo), E-Voting (council system, live demo), Full-Stack SaaS, IoT Aquaculture, plus cloud & AppSheet services. Each card links to GitHub.',
   },
   {
     keys: /hello|hi|hey|good/,
-    answer: '> Hello, traveler. I am the developer\'s AI companion. How may I assist?',
+    answer: "> Hello, traveler. I am the developer's AI companion. How may I assist?",
   },
   {
-    keys: /contact|email|reach/,
+    keys: /contact|email|reach|message/,
     answer:
-      '> Use the message form below and it will be sent to the developer\'s inbox. Or email directly at the address shown.',
+      '> Fill the message form below and press TRANSMIT — it opens your email app ready to send to huukhang3092@gmail.com.',
   },
 ]
 
@@ -97,6 +98,11 @@ export function ContactPanel() {
   const sendContact = (e: React.FormEvent) => {
     e.preventDefault()
     audio.send()
+    // No backend: compose a real email via the visitor's mail app so the
+    // message genuinely reaches the developer (never silently dropped).
+    const subject = encodeURIComponent(`Portfolio contact from ${email}`)
+    const body = encodeURIComponent(`${message}\n\n— ${email}`)
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
     setSent(true)
     setMessage('')
     setEmail('')
@@ -188,6 +194,12 @@ export function ContactPanel() {
                 >
                   ▲ TRANSMIT
                 </button>
+                <p className="text-center font-mono text-[11px] text-slate-500 mt-2">
+                  or email directly:{' '}
+                  <a href={`mailto:${profile.email}`} className="text-neon-cyan hover:underline">
+                    {profile.email}
+                  </a>
+                </p>
               </form>
             </div>
           )}

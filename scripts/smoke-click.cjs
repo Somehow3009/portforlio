@@ -90,7 +90,7 @@ async function main() {
     for (let i = 0; i < n && !clicked; i++) {
       const el = divs.nth(i)
       const txt = (await el.textContent()) ?? ''
-      if (txt.startsWith('Bizen')) {
+      if (txt.startsWith('RegFlow')) {
         try {
           await el.click({ timeout: 4000 })
           clicked = true
