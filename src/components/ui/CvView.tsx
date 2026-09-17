@@ -15,16 +15,24 @@ export function CvView() {
   }
 
   return (
-    <div data-ui className="absolute inset-0 z-30 overflow-y-auto bg-space-950 cyber-scroll">
+    <div data-ui className="absolute inset-0 z-30 overflow-y-auto bg-space-950 cyber-scroll cv-print">
       {/* top bar */}
-      <div className="sticky top-0 z-40 bg-space-950/80 backdrop-blur border-b border-slate-800 px-5 py-3 flex items-center justify-between">
+      <div className="no-print sticky top-0 z-40 bg-space-950/80 backdrop-blur border-b border-slate-800 px-5 py-3 flex items-center justify-between">
         <span className="font-display text-neon-cyan font-bold tracking-widest">2D CV</span>
-        <button
-          onClick={backTo3D}
-          className="px-4 py-2 rounded border border-neon-cyan/50 text-neon-cyan font-mono text-sm hover:bg-neon-cyan/10 transition"
-        >
-          ⬒ BACK TO 3D WORLD
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => window.print()}
+            className="px-4 py-2 rounded border border-neon-green/50 text-neon-green font-mono text-sm hover:bg-neon-green/10 transition"
+          >
+            🖨 PRINT / PDF
+          </button>
+          <button
+            onClick={backTo3D}
+            className="px-4 py-2 rounded border border-neon-cyan/50 text-neon-cyan font-mono text-sm hover:bg-neon-cyan/10 transition"
+          >
+            ⬒ BACK TO 3D WORLD
+          </button>
+        </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-5 py-10">

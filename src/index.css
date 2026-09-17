@@ -56,3 +56,41 @@ canvas {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Print résumé: only the 2D CV, light theme, no app chrome */
+@media print {
+  body {
+    background: #fff !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .cv-print,
+  .cv-print * {
+    visibility: visible;
+  }
+  .cv-print {
+    position: absolute !important;
+    inset: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+  .cv-print .no-print {
+    display: none !important;
+  }
+  .cv-print p,
+  .cv-print span,
+  .cv-print li,
+  .cv-print h1,
+  .cv-print h2,
+  .cv-print h3,
+  .cv-print a {
+    color: #111 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  .cv-print .section-title {
+    color: #0e7490 !important;
+    border-color: #0e7490 !important;
+  }
+}
